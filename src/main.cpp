@@ -11,6 +11,7 @@
 using namespace std;
 
 const string title = "Vending Machine";
+const int width = 53;
 
 const string red("\033[0;31m");
 const string green("\033[1;32m");
@@ -26,8 +27,19 @@ const string yellow_BG("\033[1;43m");
 const string cyan_BG("\033[0;46m");
 const string magenta_BG("\033[0;45m");
 
+enum class Direction
+{
+	left,
+	center,
+	right
+};
+
+// Functions
 void clearScreen();
 void resetInput();
+void printText(string text, int width, Direction dir, int offset);
+void printSpacer(int width);
+void fullLine(int width);
 
 void clearScreen()
 {
@@ -47,11 +59,38 @@ void resetInput()
 	cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
-void centerText(string text, int width)
+void printText(string text, int width, Direction dir, int offset = 0)
 {
-	int left = ((width + text.length()) / 2) - 1;
-	int right = width - left - 2;
-	cout << "*" << setw(left) << text << string(right, ' ') << "*" << endl;
+	int left = 0;
+	int right = 0;
+
+	switch (dir)
+	{
+	case Direction::left:
+		left = offset;
+		right = width - text.length() - left - 2;
+		break;
+	case Direction::center:
+		left = ((width - text.length()) / 2) - 1;
+		right = width - text.length() - left - 2;
+		break;
+	case Direction::right:
+		right = offset;
+		left = width - text.length() - right - 2;
+		break;
+	}
+
+	cout << "*" << string(left, ' ') << text << string(right, ' ') << "*" << endl;
+}
+
+void printSpacer(int width)
+{
+	cout << "*" << setw(width - 1) << "*" << endl;
+}
+
+void fullLine(int width)
+{
+	cout << string(width, '*') << endl;
 }
 
 int main()
@@ -60,13 +99,13 @@ int main()
 
 	clearScreen();
 
-	cout << string(53, '*') << endl;
-	cout << "*" << setw(52) << "*" << endl;
-	centerText(title, 53);
-	centerText("by Glowstudent", 53);
-	centerText("This is a test program", 53);
-	cout << "*" << setw(52) << "*" << endl;
-	cout << string(53, '*') << endl;
+	fullLine(width);
+	printSpacer(width);
+
+	printText(title, width, Direction::center);
+
+	printSpacer(width);
+	fullLine(width);
 
 	return 0;
 }
