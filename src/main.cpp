@@ -47,13 +47,26 @@ void resetInput()
 	cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
+void centerText(string text, int width)
+{
+	int left = ((width + text.length()) / 2) - 1;
+	int right = width - left - 2;
+	cout << "*" << setw(left) << text << string(right, ' ') << "*" << endl;
+}
+
 int main()
 {
 	cout << "\033]0;" << title << "\007";
 
 	clearScreen();
 
-	cout << yellow << title << reset << endl;
+	cout << string(53, '*') << endl;
+	cout << "*" << setw(52) << "*" << endl;
+	centerText(title, 53);
+	centerText("by Glowstudent", 53);
+	centerText("This is a test program", 53);
+	cout << "*" << setw(52) << "*" << endl;
+	cout << string(53, '*') << endl;
 
 	return 0;
 }
