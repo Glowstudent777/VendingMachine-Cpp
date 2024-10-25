@@ -8,38 +8,17 @@
 #include <string>
 #include <limits>
 
+// Function library for future use
+#include <consoleUtils.h>
+
 using namespace std;
 
 const string title = "Vending Machine";
 const int width = 53;
 
-const string red("\033[0;31m");
-const string green("\033[1;32m");
-const string yellow("\033[1;33m");
-const string cyan("\033[0;36m");
-const string magenta("\033[0;35m");
-
-const string reset("\033[0m");
-
-const string red_BG("\033[0;41m");
-const string green_BG("\033[1;42m");
-const string yellow_BG("\033[1;43m");
-const string cyan_BG("\033[0;46m");
-const string magenta_BG("\033[0;45m");
-
-enum class Direction
-{
-	left,
-	center,
-	right
-};
-
 // Functions
 void clearScreen();
 void resetInput();
-void printText(string text, int width, Direction dir, int offset);
-void printSpacer(int width);
-void fullLine(int width);
 
 void clearScreen()
 {
@@ -59,53 +38,47 @@ void resetInput()
 	cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
-void printText(string text, int width, Direction dir, int offset = 0)
+void mainScreen()
 {
-	int left = 0;
-	int right = 0;
+	int userSelection;
 
-	switch (dir)
+	clearScreen();
+
+	fullLine(width);
+	printSpacer(width);
+	printText(title, width, Alignment::center);
+	printSpacer(width);
+
+	printText("1) Pepsi     | $1.50   2) Coke       | $1.50", width, Alignment::left, 3);
+	printText("3) Sprite    | $1.50   4) Dr. Pepper | $1.50", width, Alignment::left, 3);
+	printText("5) Root Beer | $1.50   6) Water      | $1.00", width, Alignment::left, 3);
+	printSpacer(width);
+	printText("7) Insert Money        8) Exit", width, Alignment::left, 3);
+
+	printSpacer(width);
+	fullLine(width);
+
+	cout << "Selection: ";
+	cin >> userSelection;
+}
+
+void getScreen(int screen)
+{
+	switch (screen)
 	{
-	case Direction::left:
-		left = offset;
-		right = width - text.length() - left - 2;
+	case 0:
+		mainScreen();
 		break;
-	case Direction::center:
-		left = ((width - text.length()) / 2) - 1;
-		right = width - text.length() - left - 2;
-		break;
-	case Direction::right:
-		right = offset;
-		left = width - text.length() - right - 2;
+	default:
 		break;
 	}
-
-	cout << "*" << string(left, ' ') << text << string(right, ' ') << "*" << endl;
-}
-
-void printSpacer(int width)
-{
-	cout << "*" << setw(width - 1) << "*" << endl;
-}
-
-void fullLine(int width)
-{
-	cout << string(width, '*') << endl;
 }
 
 int main()
 {
 	cout << "\033]0;" << title << "\007";
 
-	clearScreen();
-
-	fullLine(width);
-	printSpacer(width);
-
-	printText(title, width, Direction::center);
-
-	printSpacer(width);
-	fullLine(width);
+	getScreen(0);
 
 	return 0;
 }
