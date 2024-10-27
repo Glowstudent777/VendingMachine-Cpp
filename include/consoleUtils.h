@@ -4,6 +4,7 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+#include <limits>
 
 enum class Alignment
 {
@@ -46,6 +47,24 @@ void printSpacer(int width)
 void fullLine(int width)
 {
     std::cout << std::string(width, '*') << std::endl;
+}
+
+void clearScreen()
+{
+    // Clear the screen
+#if defined(_WIN32) || defined(_WIN64)
+    system("cls");
+#elif defined(__linux__)
+    system("clear");
+#elif defined(__APPLE__)
+    system("clear");
+#endif
+}
+
+void resetInput()
+{
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
 std::string format_currency(float amount)

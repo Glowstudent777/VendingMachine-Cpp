@@ -6,9 +6,7 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
-#include <limits>
 #include <set>
-#include <cmath>
 
 // Function library for future use
 #include <consoleUtils.h>
@@ -22,8 +20,6 @@ const set acceptedInput = set<float>{0, 0.01, 0.05, 0.10, 0.25, 1, 2, 5, 10, 20}
 double balance = 0.00;
 
 // Functions
-void clearScreen();
-void resetInput();
 void exitProgram(string message, int code);
 
 void handleSelection(int selection);
@@ -34,18 +30,6 @@ void mainScreen();
 
 void printMenu(int menu);
 
-void clearScreen()
-{
-	// Clear the screen
-#if defined(_WIN32) || defined(_WIN64)
-	system("cls");
-#elif defined(__linux__)
-	system("clear");
-#elif defined(__APPLE__)
-	system("clear");
-#endif
-}
-
 void exitProgram(string message = "", int code = 0)
 {
 	if (message != "")
@@ -53,12 +37,6 @@ void exitProgram(string message = "", int code = 0)
 		cout << message << endl;
 	}
 	exit(code);
-}
-
-void resetInput()
-{
-	cin.clear();
-	cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
 void printMenu(int menu)
