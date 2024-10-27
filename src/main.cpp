@@ -23,7 +23,7 @@ int balance = 0;
 void exitProgram(string message, int code);
 
 void handleSelection(int selection);
-void handleVending(float price, int selection);
+void handleVending(int price, int selection);
 
 void getScreen(int screen);
 void mainScreen();
@@ -206,7 +206,7 @@ void handleSelection(int selection)
 	}
 }
 
-void handleVending(float price, int sel)
+void handleVending(int price, int sel)
 {
 	int selection;
 	string item;
