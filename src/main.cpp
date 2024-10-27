@@ -17,7 +17,7 @@ const string title = "Vending Machine";
 const int width = 53;
 const set acceptedInput = set<float>{0, 0.01, 0.05, 0.10, 0.25, 1, 2, 5, 10, 20};
 
-double balance = 0.00;
+int balance = 0;
 
 // Functions
 void exitProgram(string message, int code);
@@ -76,22 +76,22 @@ void handleSelection(int selection)
 	switch (selection)
 	{
 	case 1:
-		handleVending(1.50, 1);
+		handleVending(150, 1);
 		break;
 	case 2:
-		handleVending(1.50, 2);
+		handleVending(150, 2);
 		break;
 	case 3:
-		handleVending(1.50, 3);
+		handleVending(150, 3);
 		break;
 	case 4:
-		handleVending(1.50, 4);
+		handleVending(150, 4);
 		break;
 	case 5:
-		handleVending(1.50, 5);
+		handleVending(150, 5);
 		break;
 	case 6:
-		handleVending(1.00, 6);
+		handleVending(100, 6);
 		break;
 	case 7:
 		double money;
@@ -105,11 +105,11 @@ void handleSelection(int selection)
 			cout << "Amount (max $20, $0 to return): $";
 			cin >> money;
 
-			while (cin.fail() || !acceptedInput.count(money) || (balance + money > 100))
+			while (cin.fail() || !acceptedInput.count(money) || (balance + money > 10000))
 			{
 				resetInput();
 
-				if (balance + money > 100)
+				if (balance + money > 10000)
 					cout << "Maximum balance is $100. Please insert a smaller amount." << endl;
 				else
 					cout << "Invalid amount. Please insert a valid bill or coin under $20." << endl;
@@ -117,7 +117,7 @@ void handleSelection(int selection)
 				cin >> money;
 			}
 
-			balance += money;
+			balance += (money * 100);
 		} while (money != 0);
 		getScreen(0);
 		break;
@@ -135,58 +135,58 @@ void handleSelection(int selection)
 
 			while (balance >= 0)
 			{
-				if (balance >= 20)
+				if (balance >= 2000)
 				{
-					int twenties = balance / 20;
-					balance -= twenties * 20;
+					int twenties = balance / 2000;
+					balance -= twenties * 2000;
 					printText(to_string(twenties) + " $20 bill(s)", width, Alignment::left, 4);
+				}
+				else if (balance >= 1000)
+				{
+					int tens = balance / 1000;
+					balance -= tens * 1000;
+					printText(to_string(tens) + " $10 bill(s)", width, Alignment::left, 4);
+				}
+				else if (balance >= 500)
+				{
+					int fives = balance / 500;
+					balance -= fives * 500;
+					printText(to_string(fives) + " $5 bill(s)", width, Alignment::left, 4);
+				}
+				else if (balance >= 200)
+				{
+					int twos = balance / 200;
+					balance -= twos * 200;
+					printText(to_string(twos) + " $2 bill(s)", width, Alignment::left, 4);
+				}
+				else if (balance >= 100)
+				{
+					int ones = balance / 100;
+					balance -= ones * 100;
+					printText(to_string(ones) + " $1 bill(s)", width, Alignment::left, 4);
+				}
+				else if (balance >= 25)
+				{
+					int quarters = balance / 25;
+					balance -= quarters * 25;
+					printText(to_string(quarters) + " quarter(s)", width, Alignment::left, 4);
 				}
 				else if (balance >= 10)
 				{
-					int tens = balance / 10;
-					balance -= tens * 10;
-					printText(to_string(tens) + " $10 bill(s)", width, Alignment::left, 4);
+					int dimes = balance / 10;
+					balance -= dimes * 10;
+					printText(to_string(dimes) + " dime(s)", width, Alignment::left, 4);
 				}
 				else if (balance >= 5)
 				{
-					int fives = balance / 5;
-					balance -= fives * 5;
-					printText(to_string(fives) + " $5 bill(s)", width, Alignment::left, 4);
-				}
-				else if (balance >= 2)
-				{
-					int twos = balance / 2;
-					balance -= twos * 2;
-					printText(to_string(twos) + " $2 bill(s)", width, Alignment::left, 4);
+					int nickels = balance / 5;
+					balance -= nickels * 5;
+					printText(to_string(nickels) + " nickel(s)", width, Alignment::left, 4);
 				}
 				else if (balance >= 1)
 				{
-					int ones = balance / 1;
-					balance -= ones * 1;
-					printText(to_string(ones) + " $1 bill(s)", width, Alignment::left, 4);
-				}
-				else if (balance >= 0.25)
-				{
-					int quarters = balance / 0.25;
-					balance -= quarters * 0.25;
-					printText(to_string(quarters) + " quarter(s)", width, Alignment::left, 4);
-				}
-				else if (balance >= 0.10)
-				{
-					int dimes = balance / 0.10;
-					balance -= dimes * 0.10;
-					printText(to_string(dimes) + " dime(s)", width, Alignment::left, 4);
-				}
-				else if (balance >= 0.05)
-				{
-					int nickels = balance / 0.05;
-					balance -= nickels * 0.05;
-					printText(to_string(nickels) + " nickel(s)", width, Alignment::left, 4);
-				}
-				else if (balance >= 0.01)
-				{
-					int pennies = balance / 0.01;
-					balance -= pennies * 0.01;
+					int pennies = balance / 1;
+					balance -= pennies * 1;
 					printText(to_string(pennies) + " penny(ies)", width, Alignment::left, 4);
 				}
 				else

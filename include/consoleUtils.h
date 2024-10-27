@@ -70,7 +70,7 @@ void resetInput()
 std::string format_currency(float amount)
 {
     std::stringstream stream;
-    stream << std::fixed << std::setprecision(2) << amount;
+    stream << std::fixed << std::setprecision(2) << amount / 100;
     std::string formatted = stream.str();
     return formatted;
 }
