@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <iomanip>
+#include <sstream>
 
 enum class Alignment
 {
@@ -45,6 +46,14 @@ void printSpacer(int width)
 void fullLine(int width)
 {
     std::cout << std::string(width, '*') << std::endl;
+}
+
+std::string format_currency(float amount)
+{
+    std::stringstream stream;
+    stream << std::fixed << std::setprecision(2) << amount;
+    std::string formatted = stream.str();
+    return formatted;
 }
 
 #endif
