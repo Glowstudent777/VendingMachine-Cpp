@@ -153,12 +153,6 @@ void handleSelection(int selection)
 					balance -= fives * 500;
 					printText(to_string(fives) + " $5 bill(s)", width, Alignment::left, 4);
 				}
-				else if (balance >= 200)
-				{
-					int twos = balance / 200;
-					balance -= twos * 200;
-					printText(to_string(twos) + " $2 bill(s)", width, Alignment::left, 4);
-				}
 				else if (balance >= 100)
 				{
 					int ones = balance / 100;
